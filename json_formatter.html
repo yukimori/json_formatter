@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<title>JSON Formatter</title>
+<script type="text/javascript" charset="utf-8" src="jquery-1.9.0.min.js"></script>
+<script type="text/javascript">
+function translate(){
+	try {
+		s = $('#inputtext').val();
+		s = JSON.stringify(JSON.parse(s), null, '  ');
+		$('#outputtext').val(s);
+	} catch(e) {
+		alert(e) ;
+	}
+}
+//window.onload = translate;
+</script>
+</head>
+<body>
+<center>
+<h1 style="font-size: medium;">JSON Pretty Printing Formatter</h1>
+	<p><input type="button" value="format" onclick="translate();" /></p>
+	<table>
+		<tr>
+			<td>
+				your input JSON text<br />
+				<textarea id="inputtext" rows="100" cols="40">{&quot;a&quot;:&quot;b&quot;,&quot;c&quot;:{&quot;d&quot;:&quot;e&quot;,&quot;f&quot;:9, &quot;h&quot;:[&quot;i&quot;,&quot;j&quot;,&quot;k&quot;]},&quot;l&quot;:&quot;m&quot;}</textarea>
+			</td>
+			<td>
+				output JSON text<br />
+				<textarea id="outputtext" rows="100" cols="40"></textarea>
+			</td>
+		</tr>
+	</table>
+
+</center>
+</body>
+</html>
