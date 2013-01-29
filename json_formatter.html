@@ -6,14 +6,80 @@
 <title>JSON Formatter</title>
 <script type="text/javascript" charset="utf-8" src="jquery-1.9.0.min.js"></script>
 <script type="text/javascript">
+// http://d.hatena.ne.jp/javascripter/20080825/1219686109
+window.console.debugMode = true;
+// console.debug
+window.console._debug = window.console.debug;
+window.console.debug = function(log) {
+	if (window.console.debugMode && window.console) {
+        // Firebugだけ
+//		window.console.notifyFirebug(arguments, "debug", "firebugAppendConsole");
+		window.console._debug(arguments) ;
+	}
+};
+
 function translate(){
 	try {
 		s = $('#inputtext').val();
-		s = JSON.stringify(JSON.parse(s), null, '  ');
+		var str = JSON.parse(s) ;
+		console.debug("str : " + str) ;
+		s = JSON.stringify(str, null, '  ');
 		$('#outputtext').val(s);
 	} catch(e) {
-		alert(e) ;
+//		alert(e) ;
+		showErrors(e) ;
 	}
+}
+function parse(){
+    try {
+   		s = $('#inputtext').val();
+        parsedJson = JSON.parse(s) ;
+        $('#parseJSON').val(s) ;
+    } catch(e) {
+//		alert(e) ;
+//		showErrors(e) ;
+    } 
+}
+function showErrors(error) {
+	printProperties(error) ;
+	print_r(error) ;
+}
+function printProperties(obj) {
+	var properties = '' ;
+	for(var prop in obj) {
+		properties += prop + "=" + obj[prop] + "\n" ;
+	}
+	alert(properties) ;
+}
+function print_r(obj) {
+	var count_obj = 0;
+	var errorInfo = '' ;
+    function _output(str) {
+//		　document.writeln(str + "<br/>");
+		errorInfo += str + "\n" ;
+    }
+    function _print_r(obj, name, level) {
+		var s = "";
+        if (obj == undefined || level > 4) {
+			return;
+		}
+        for (var i = 0; i < level; i++) {
+			s += " | "; 
+		}
+        s += " - " + name + ":" + typeof(obj) + "=" + obj;
+        _output(s);
+        if (name == "document" || typeof(obj) != "object") {
+			return;
+		}
+        for ( key in obj ) {
+			if (count_obj++ >150) {
+        		return;
+    		}
+			_print_r(obj[key], key, level + 1);
+        }
+    }
+	_print_r(obj, "*", 0);
+	alert(errorInfo) ;
 }
 //window.onload = translate;
 </script>
@@ -21,16 +87,20 @@ function translate(){
 <body>
 <center>
 <h1 style="font-size: medium;">JSON Pretty Printing Formatter</h1>
-	<p><input type="button" value="format" onclick="translate();" /></p>
+	<p><input type="button" value="format" onclick="translate();parse();" /></p>
 	<table>
 		<tr>
 			<td>
 				your input JSON text<br />
-				<textarea id="inputtext" rows="100" cols="40">{&quot;a&quot;:&quot;b&quot;,&quot;c&quot;:{&quot;d&quot;:&quot;e&quot;,&quot;f&quot;:9, &quot;h&quot;:[&quot;i&quot;,&quot;j&quot;,&quot;k&quot;]},&quot;l&quot;:&quot;m&quot;}</textarea>
+	<textarea id="inputtext" rows="50" cols="40">{&quot;a&quot;:&quot;b&quot;,&quot;c&quot;:{&quot;d&quot;:&quot;e&quot;,&quot;f&quot;:9, &quot;h&quot;:[&quot;i&quot;,&quot;j&quot;,&quot;k&quot;]},&quot;l&quot;:&quot;m&quot;}</textarea>
 			</td>
 			<td>
 				output JSON text<br />
-				<textarea id="outputtext" rows="100" cols="40"></textarea>
+				<textarea id="outputtext" rows="50" cols="40"></textarea>
+			</td>
+			<td>
+			  parse JSON<br />
+			  <textarea id="parseJSON" rows="50" cols="40"></textarea>
 			</td>
 		</tr>
 	</table>
