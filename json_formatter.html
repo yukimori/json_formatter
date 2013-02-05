@@ -17,7 +17,7 @@ window.console.debug = function(log) {
 		window.console._debug(arguments) ;
 	}
 };
-
+//JSONを整形する
 function translate(){
 	try {
 		s = $('#inputtext').val();
@@ -26,7 +26,6 @@ function translate(){
 		s = JSON.stringify(str, null, '  ');
 		$('#outputtext').val(s);
 	} catch(e) {
-//		alert(e) ;
 		showErrors(e) ;
 	}
 }
@@ -36,13 +35,14 @@ function parse(){
         parsedJson = JSON.parse(s) ;
         $('#parseJSON').val(s) ;
     } catch(e) {
-//		alert(e) ;
 //		showErrors(e) ;
     } 
 }
 function showErrors(error) {
-	printProperties(error) ;
-	print_r(error) ;
+//	alert(error) ;
+	console.log(error) ;
+//	printProperties(error) ;
+//	print_r(error) ;
 }
 function printProperties(obj) {
 	var properties = '' ;
@@ -92,7 +92,7 @@ function print_r(obj) {
 		<tr>
 			<td>
 				your input JSON text<br />
-	<textarea id="inputtext" rows="50" cols="40">{&quot;a&quot;:&quot;b&quot;,&quot;c&quot;:{&quot;d&quot;:&quot;e&quot;,&quot;f&quot;:9, &quot;h&quot;:[&quot;i&quot;,&quot;j&quot;,&quot;k&quot;]},&quot;l&quot;:&quot;m&quot;}</textarea>
+	<textarea id="inputtext" rows="50" cols="40">{&quot;a&quot;:&quot;b&quot;,&quot;c&quot;:{&quot;d&quot;:&quot;e&quot;,&quot;f&quot;:9, &quot;h&quot;:[&quot;i&quot;,&quot;j&quot;,&quot;k&quot;]},&quot;l&quot;:&quot;m&quot;,}</textarea>
 			</td>
 			<td>
 				output JSON text<br />
