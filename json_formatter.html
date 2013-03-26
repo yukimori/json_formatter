@@ -4,7 +4,8 @@
 <meta charset="UTF-8">
 <meta http-equiv="Content-Script-Type" content="text/javascript">
 <title>JSON Formatter</title>
-<script type="text/javascript" charset="utf-8" src="jquery-1.9.0.min.js"></script>
+<!--<script type="text/javascript" charset="utf-8" src="jquery-1.9.0.min.js"></script>-->
+<script type="text/javascript" charset="utf-8" src="jquery-1.9.1.js"></script>
 <script type="text/javascript">
 // http://d.hatena.ne.jp/javascripter/20080825/1219686109
 window.console.debugMode = true;
@@ -26,6 +27,7 @@ function translate(){
 		s = JSON.stringify(str, null, '  ');
 		$('#outputtext').val(s);
 	} catch(e) {
+        $('#outputtext').val(e);
 		showErrors(e) ;
 	}
 }
@@ -92,11 +94,11 @@ function print_r(obj) {
 		<tr>
 			<td>
 				your input JSON text<br />
-	<textarea id="inputtext" rows="50" cols="40">{&quot;a&quot;:&quot;b&quot;,&quot;c&quot;:{&quot;d&quot;:&quot;e&quot;,&quot;f&quot;:9, &quot;h&quot;:[&quot;i&quot;,&quot;j&quot;,&quot;k&quot;]},&quot;l&quot;:&quot;m&quot;,}</textarea>
+				<textarea id="inputtext" rows="50" cols="40">{&quot;a&quot;:&quot;b&quot;,&quot;c&quot;:{&quot;d&quot;:&quot;e&quot;,&quot;f&quot;:9, &quot;h&quot;:[&quot;i&quot;,&quot;j&quot;,&quot;k&quot;]},&quot;l&quot;:&quot;m&quot;,}</textarea>
 			</td>
 			<td>
 				output JSON text<br />
-				<textarea id="outputtext" rows="50" cols="40"></textarea>
+				<textarea id="outputtext" rows="50" cols="100"></textarea>
 			</td>
 			<td>
 			  parse JSON<br />
